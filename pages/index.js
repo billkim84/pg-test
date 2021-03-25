@@ -8,7 +8,7 @@ export default function Home() {
 
   async function startApplication() {
 
-    const res = await fetch('http://ec2-13-125-166-148.ap-northeast-2.compute.amazonaws.com:3000/application', {
+    const res = await fetch('https://pg-appl.iamport.dev/application', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

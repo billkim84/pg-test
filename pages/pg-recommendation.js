@@ -42,7 +42,7 @@ export default function PG() {
   async function getRecommendation(pTypes, size) {
 
     const url = `pg/recommendation?paymentTypes=${pTypes.join(',')}&businessSize=${size}`;
-    const res = await fetch('http://ec2-13-125-166-148.ap-northeast-2.compute.amazonaws.com:3000/' + url);
+    const res = await fetch('https://pg-appl.iamport.dev/' + url);
     const data = await res.json();
     console.log(data);
 

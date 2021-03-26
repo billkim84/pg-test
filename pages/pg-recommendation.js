@@ -9,7 +9,7 @@ export default function PG() {
   useEffect(() => {
 
     if(router.query.payments) {
-      const {payments, userId, id, sales, name} = router.query;
+      const {payments,sales, bizTypes} = router.query;
 
       const p = payments.split(',').map(type => {
         if (type.includes('신용카드')) {
@@ -27,21 +27,37 @@ export default function PG() {
         }
       });
 
+      const bt = bizTypes.split(',').map(type => {
+        if (type.includes('일반 커머스')) {
+          return 'e-commerce';
+        } else if (type.includes('디지털 컨텐츠')) {
+          return 'digital-edu'
+        } else if (type.includes('중개 플랫폼')) {
+          return 'mediation-platform'
+        } else if (type.includes('광고/마케팅')) {
+          return 'ads-marketing'
+        } else if (type.includes('구독/예약')) {
+          return 'subscription'
+        } else if (type.includes('기타')) {
+          return 'others'
+        }
+      });
+
       const t = ['신규', '30억 이상'].includes(sales) ? 'normal' : 'other';
 
       console.log(p);
       console.log(t);
 
-      getRecommendation(p, t)
+      getRecommendation(p, t, bt)
     }
 
 
   }, [router.query])
 
 
-  async function getRecommendation(pTypes, size) {
+  async function getRecommendation(pTypes, size, bTypes) {
 
-    const url = `pg/recommendation?paymentTypes=${pTypes.join(',')}&businessSize=${size}`;
+    const url = `pg/recommendation?paymentTypes=${pTypes.join(',')}&businessSize=${size}&businessTypes=${bTypes.join(',')}`;
     const res = await fetch('https://pg-appl.iamport.dev/' + url);
     const data = await res.json();
     console.log(data);
